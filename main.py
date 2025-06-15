@@ -60,7 +60,7 @@ class Pokemon:
                 if method[letterpos] == 'V' and (move in vcmoves or allvcmoves):
                     method = method[:letterpos] + 'M'
                 if method[letterpos] == 'D':
-                    method = method[:letterpos] + 'E'
+                    method = method[:letterpos] + 'S'
                 if method[letterpos] == 'R' and (move == 'volttackle' or self.name == 'shedinja'):
                     method = method[:letterpos] + 'M'
                 if method[letterpos] == 'R' and move not in finalmoveset['form_change'] and (gen >= mingen):
