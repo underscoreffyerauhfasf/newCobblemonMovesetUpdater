@@ -34,6 +34,8 @@ class Pokemon:
         self.pokedex_number = dex_number
         self.forms = formes
         self.moveset = self.build_moveset(showdownset)
+
+
     def build_moveset(self,showdownset):
         finalmoveset = {
             'level': [],
@@ -41,22 +43,28 @@ class Pokemon:
             'tutor': [],
             'egg': []
         }
+
         for move in showdownset.keys():
             levelfound = False
+
             for method in showdownset[move]:
                 letterpos = regex.search("[A-Z]", method).span()[0]
                 gen = int(method[:letterpos])
                 param = method[letterpos+1:]
+
                 #add to levelset if applicable
                 if method[letterpos] != 'V' and (gen >= mingen or move in mingenexceptions):
                     if method[letterpos] == 'L' and not levelfound:
                         finalmoveset['level'].append((int(param),move))
                         levelfound = True        
+
                     for cobblemonmethod in learnsetoptions.keys():
                         if learnsetoptions[cobblemonmethod][showdowntoname[method[letterpos]]] and move not in finalmoveset[cobblemonmethod]:
                             finalmoveset[cobblemonmethod].append(move)
+
         for method in finalmoveset.keys():
             finalmoveset[method].sort()
+
         return finalmoveset
 
 
