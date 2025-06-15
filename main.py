@@ -18,8 +18,8 @@ showdowntoname = {
 }
 
 mingen = 3
-mingenexceptions = ['nightmare']
-
+vcmoves = ['nightmare']
+allvcmoves = False
 # E is egg
 # M is tm/tr
 # T is tutor 
@@ -33,7 +33,10 @@ class Pokemon:
         self.name = name
         self.pokedex_number = dex_number
         self.forms = formes
-        self.moveset = self.build_moveset(showdownset)
+        if showdownset == {}:
+            self.moveset = {}
+        else:
+            self.moveset = self.build_moveset(showdownset)
 
 
     def build_moveset(self,showdownset):
@@ -41,7 +44,8 @@ class Pokemon:
             'level': [],
             'tm': [],
             'tutor': [],
-            'egg': []
+            'egg': [],
+            'form_change': []
         }
 
         for move in showdownset.keys():
@@ -53,12 +57,20 @@ class Pokemon:
                 param = method[letterpos+1:]
 
                 #add to levelset if applicable
-                if method[letterpos] != 'V' and (gen >= mingen or move in mingenexceptions):
+                if method[letterpos] == 'V' and (move in vcmoves or allvcmoves):
+                    method = method[:letterpos] + 'M'
+                if method[letterpos] == 'D':
+                    method = method[:letterpos] + 'E'
+                if method[letterpos] == 'R' and (move == 'volttackle' or self.name == 'shedinja'):
+                    method = method[:letterpos] + 'M'
+                if method[letterpos] == 'R' and move not in finalmoveset['form_change'] and (gen >= mingen):
+                    finalmoveset['form_change'].append(move)
+                elif method[letterpos] not in ['V', 'R'] and (gen >= mingen):
                     if method[letterpos] == 'L' and not levelfound:
                         finalmoveset['level'].append((int(param),move))
                         levelfound = True        
 
-                    for cobblemonmethod in learnsetoptions.keys():
+                    for cobblemonmethod in (learnsetoptions.keys() - ['form_change']):
                         if learnsetoptions[cobblemonmethod][showdowntoname[method[letterpos]]] and move not in finalmoveset[cobblemonmethod]:
                             finalmoveset[cobblemonmethod].append(move)
 
@@ -76,7 +88,11 @@ class NewSuperCobblemonMovesetImporter:
     
     def findPokemonData(self):
         for i in pkdict.colonThree.keys():
-            thismon = Pokemon(i, 0, [], pkdict.colonThree[i]["learnset"])
+            if "learnset" in pkdict.colonThree[i].keys():
+                currentlearnset = pkdict.colonThree[i]["learnset"]
+            else:
+                currentlearnset = {}
+            thismon = Pokemon(i, 0, [], currentlearnset)
             print(i)
             print(thismon.moveset)
             print("\n\n")
