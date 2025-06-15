@@ -1,5 +1,5 @@
 import re as regex
-import yaml                         # this one is entirely for beautiful printing
+import json
 
 import pokemon_dict as pkdict
 
@@ -122,8 +122,7 @@ class NewSuperCobblemonMovesetImporter:
 
             thismon = Pokemon(i, 0, [], currentlearnset)
 
-            print(f"\n==={i.upper()}===\n")
-            # print(thismon.moveset,"\n")
-            print(yaml.dump(thismon.moveset,default_flow_style=False))
+            print(f"\n\n\n==={i.upper()}===\n")
+            print(json.dumps(thismon.moveset,indent=4,sort_keys=True))
 
 importer = NewSuperCobblemonMovesetImporter()
