@@ -1,8 +1,11 @@
 import re as regex
+import yaml                         # this one is entirely for beautiful printing
+
 import pokemon_dict as pkdict
 
 listFile = "output.txt"
 
+# move will be added to [key] if it is learned via [value]
 learnsetoptions = {
     'tm':       {'level':True,  'tm':True,  'tutor':True,   'egg':True,     'event':True},
     'tutor':    {'level':False, 'tm':False, 'tutor':True,   'egg':False,    'event':False},
@@ -53,7 +56,7 @@ class Pokemon:
 
         # loop through every move in passed list showdownset
         for move in showdownset.keys():
-            levelfound = False
+            levelfoundingen = 0
 
             # ...then loop through every learn method in the current move
             for method in showdownset[move]:
@@ -84,11 +87,11 @@ class Pokemon:
 
                 # otherwise if the move is NOT virtual console or special-case AND this is a gen we care about, proceed to method registration
                 elif method[letterpos] not in ['V', 'R'] and (gen >= mingen):
-                    # if the move is levelup (L) AND the levelup move has not yet been registered, set level as found and register the method
+                    # if the move is levelup (L) AND this is the latest generation this move has been found in, set level as found and register the method
                     # (this is to prioritize latest levelup setting-- if a move is learned at a certain level in newer gens, older ones won't override it!)
-                    if method[letterpos] == 'L' and not levelfound:
+                    if method[letterpos] == 'L' and (gen >= levelfoundingen):
                         finalmoveset['level'].append((int(param),move))
-                        levelfound = True        
+                        levelfoundingen = gen
 
                     # loop through the configured options;
                     for cobblemonmethod in (learnsetoptions.keys() - ['form_change']):
@@ -119,7 +122,8 @@ class NewSuperCobblemonMovesetImporter:
 
             thismon = Pokemon(i, 0, [], currentlearnset)
 
-            print("\n",i)
-            print(thismon.moveset,"\n")
+            print(f"\n==={i.upper()}===\n")
+            # print(thismon.moveset,"\n")
+            print(yaml.dump(thismon.moveset,default_flow_style=False))
 
 importer = NewSuperCobblemonMovesetImporter()
