@@ -84,7 +84,7 @@ class Pokemon:
 
                 # otherwise if the move is NOT virtual console or special-case AND this is a gen we care about, proceed to method registration
                 elif method[letterpos] not in ['V', 'R'] and (gen >= mingen):
-                    # if the move is levelup (L) AND the level has not yet been found, set level as found and register the method
+                    # if the move is levelup (L) AND the levelup move has not yet been registered, set level as found and register the method
                     # (this is to prioritize latest levelup setting-- if a move is learned at a certain level in newer gens, older ones won't override it!)
                     if method[letterpos] == 'L' and not levelfound:
                         finalmoveset['level'].append((int(param),move))
