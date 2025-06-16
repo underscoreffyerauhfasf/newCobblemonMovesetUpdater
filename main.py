@@ -138,6 +138,7 @@ class NewSuperCobblemonMovesetImporter:
         self.findPokemonData()
     
     def get_baseform(self, formname):
+        '''Takes a real name (eg. `"Slowbro"`) and finds the Pokemon that it belongs to.'''
         searchingname = dex.SpeciesDataTable[formname]["baseSpecies"]
         for i in dex.SpeciesDataTable.keys():
             if dex.SpeciesDataTable[i]["name"] == searchingname:
@@ -148,20 +149,22 @@ class NewSuperCobblemonMovesetImporter:
         for i in dex.SpeciesDataTable.keys():
             if i in pkdict.colonThree.keys():
                 newmon = Pokemon(i, dex.SpeciesDataTable[i]["num"])
+
                 if "learnset" in pkdict.colonThree[i].keys():
-                    #form has a moveset
+                    # this form has a moveset
                     newmon.moveset = newmon.build_moveset(pkdict.colonThree[i]["learnset"])
+
                 if "baseSpecies" in dex.SpeciesDataTable[i].keys():
-                    #altform
+                    # this pokemon is an altform
                     baseform = self.get_baseform(i)
                     newmon.moveset = newmon.mergeFormMoveset(self.national_pokedex[baseform].moveset)
                     self.national_pokedex[baseform].forms.append(newmon)
                 else: 
                     #baseform
                     self.national_pokedex[i] = newmon
+
                 print(i)
-                #print(f"\n\n\n==={i.upper()}===\n")
-                #print(json.dumps(newmon.moveset,indent=4,sort_keys=True))
+
         for i in self.national_pokedex.keys():
             print(f"\n\n\n==={i.upper()}===\n")
             print(self.national_pokedex[i])
