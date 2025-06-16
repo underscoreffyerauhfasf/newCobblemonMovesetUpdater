@@ -2540,7 +2540,7 @@ SpeciesDataTable = {
 		"evoCondition": "during the day",
 		"evos": ["Blissey"],
 		"eggGroups": ["Fairy"],
-		"canHatch": true,
+		"canHatch": True,
 	},
 	"tangela": {
 		"num": 114,
@@ -2675,7 +2675,7 @@ SpeciesDataTable = {
 		"evoType": "levelMove",
 		"evoMove": "Mimic",
 		"eggGroups": ["Human-Like"],
-		"canHatch": true,
+		"canHatch": True,
 		"otherFormes": ["Mr. Mime-Galar"],
 		"formeOrder": ["Mr. Mime", "Mr. Mime-Galar"],
 	},
@@ -2696,7 +2696,7 @@ SpeciesDataTable = {
 		"evoRegion": "Galar",
 		"evos": ["Mr. Rime"],
 		"eggGroups": ["Human-Like"],
-		"canHatch": true,
+		"canHatch": True,
 	},
 	"scyther": {
 		"num": 123,
@@ -3115,7 +3115,7 @@ SpeciesDataTable = {
 		"prevo": "Munchlax",
 		"evoType": "levelFriendship",
 		"eggGroups": ["Monster"],
-		"canHatch": true,
+		"canHatch": True,
 		"canGigantamax": "G-Max Replenish",
 	},
 	"snorlaxgmax": {
@@ -3610,7 +3610,7 @@ SpeciesDataTable = {
 		"color": "Yellow",
 		"evos": ["Pikachu"],
 		"eggGroups": ["Undiscovered"],
-		"canHatch": true,
+		"canHatch": True,
 		"otherFormes": ["Pichu-Spiky-eared"],
 		"formeOrder": ["Pichu", "Pichu-Spiky-eared"],
 	},
@@ -3640,7 +3640,7 @@ SpeciesDataTable = {
 		"color": "Pink",
 		"evos": ["Clefairy"],
 		"eggGroups": ["Undiscovered"],
-		"canHatch": true,
+		"canHatch": True,
 	},
 	"igglybuff": {
 		"num": 174,
@@ -3654,7 +3654,7 @@ SpeciesDataTable = {
 		"color": "Pink",
 		"evos": ["Jigglypuff"],
 		"eggGroups": ["Undiscovered"],
-		"canHatch": true,
+		"canHatch": True,
 	},
 	"togepi": {
 		"num": 175,
@@ -3668,7 +3668,7 @@ SpeciesDataTable = {
 		"color": "White",
 		"evos": ["Togetic"],
 		"eggGroups": ["Undiscovered"],
-		"canHatch": true,
+		"canHatch": True,
 	},
 	"togetic": {
 		"num": 176,
@@ -3792,7 +3792,7 @@ SpeciesDataTable = {
 		"evoType": "levelFriendship",
 		"evos": ["Azumarill"],
 		"eggGroups": ["Water 1", "Fairy"],
-		"canHatch": true,
+		"canHatch": True,
 	},
 	"azumarill": {
 		"num": 184,
@@ -3820,7 +3820,7 @@ SpeciesDataTable = {
 		"evoType": "levelMove",
 		"evoMove": "Mimic",
 		"eggGroups": ["Mineral"],
-		"canHatch": true,
+		"canHatch": True,
 	},
 	"politoed": {
 		"num": 186,
@@ -4079,7 +4079,7 @@ SpeciesDataTable = {
 		"prevo": "Wynaut",
 		"evoLevel": 15,
 		"eggGroups": ["Amorphous"],
-		"canHatch": true,
+		"canHatch": True,
 	},
 	"girafarig": {
 		"num": 203,
@@ -4477,7 +4477,7 @@ SpeciesDataTable = {
 		"evoType": "levelExtra",
 		"evoCondition": "with a Remoraid in party",
 		"eggGroups": ["Water 1"],
-		"canHatch": true,
+		"canHatch": True,
 	},
 	"skarmory": {
 		"num": 227,
@@ -4621,7 +4621,7 @@ SpeciesDataTable = {
 		"color": "Purple",
 		"evos": ["Hitmonlee", "Hitmonchan", "Hitmontop"],
 		"eggGroups": ["Undiscovered"],
-		"canHatch": true,
+		"canHatch": True,
 	},
 	"hitmontop": {
 		"num": 237,
@@ -4650,7 +4650,7 @@ SpeciesDataTable = {
 		"color": "Pink",
 		"evos": ["Jynx"],
 		"eggGroups": ["Undiscovered"],
-		"canHatch": true,
+		"canHatch": True,
 	},
 	"elekid": {
 		"num": 239,
@@ -4664,7 +4664,7 @@ SpeciesDataTable = {
 		"color": "Yellow",
 		"evos": ["Electabuzz"],
 		"eggGroups": ["Undiscovered"],
-		"canHatch": true,
+		"canHatch": True,
 	},
 	"magby": {
 		"num": 240,
@@ -4678,7 +4678,7 @@ SpeciesDataTable = {
 		"color": "Red",
 		"evos": ["Magmar"],
 		"eggGroups": ["Undiscovered"],
-		"canHatch": true,
+		"canHatch": True,
 	},
 	"miltank": {
 		"num": 241,
@@ -5558,7 +5558,7 @@ SpeciesDataTable = {
 		"color": "Blue",
 		"evos": ["Marill"],
 		"eggGroups": ["Undiscovered"],
-		"canHatch": true,
+		"canHatch": True,
 	},
 	"nosepass": {
 		"num": 299,
@@ -5852,7 +5852,7 @@ SpeciesDataTable = {
 		"evoCondition": "during the day",
 		"evos": ["Roserade"],
 		"eggGroups": ["Fairy", "Grass"],
-		"canHatch": true,
+		"canHatch": True,
 	},
 	"gulpin": {
 		"num": 316,
@@ -6501,7 +6501,7 @@ SpeciesDataTable = {
 		"evoType": "levelFriendship",
 		"evoCondition": "at night",
 		"eggGroups": ["Amorphous"],
-		"canHatch": true,
+		"canHatch": True,
 	},
 	"absol": {
 		"num": 359,
@@ -6541,7 +6541,7 @@ SpeciesDataTable = {
 		"color": "Blue",
 		"evos": ["Wobbuffet"],
 		"eggGroups": ["Undiscovered"],
-		"canHatch": true,
+		"canHatch": True,
 	},
 	"snorunt": {
 		"num": 361,
@@ -7329,7 +7329,7 @@ SpeciesDataTable = {
 		"color": "Green",
 		"evos": ["Roselia"],
 		"eggGroups": ["Undiscovered"],
-		"canHatch": true,
+		"canHatch": True,
 	},
 	"roserade": {
 		"num": 407,
@@ -7760,7 +7760,7 @@ SpeciesDataTable = {
 		"color": "Yellow",
 		"evos": ["Chimecho"],
 		"eggGroups": ["Undiscovered"],
-		"canHatch": true,
+		"canHatch": True,
 	},
 	"stunky": {
 		"num": 434,
@@ -7825,7 +7825,7 @@ SpeciesDataTable = {
 		"color": "Brown",
 		"evos": ["Sudowoodo"],
 		"eggGroups": ["Undiscovered"],
-		"canHatch": true,
+		"canHatch": True,
 	},
 	"mimejr": {
 		"num": 439,
@@ -7838,7 +7838,7 @@ SpeciesDataTable = {
 		"color": "Pink",
 		"evos": ["Mr. Mime", "Mr. Mime-Galar"],
 		"eggGroups": ["Undiscovered"],
-		"canHatch": true,
+		"canHatch": True,
 	},
 	"happiny": {
 		"num": 440,
@@ -7852,7 +7852,7 @@ SpeciesDataTable = {
 		"color": "Pink",
 		"evos": ["Chansey"],
 		"eggGroups": ["Undiscovered"],
-		"canHatch": true,
+		"canHatch": True,
 	},
 	"chatot": {
 		"num": 441,
@@ -7943,7 +7943,7 @@ SpeciesDataTable = {
 		"color": "Black",
 		"evos": ["Snorlax"],
 		"eggGroups": ["Undiscovered"],
-		"canHatch": true,
+		"canHatch": True,
 	},
 	"riolu": {
 		"num": 447,
@@ -7957,7 +7957,7 @@ SpeciesDataTable = {
 		"color": "Blue",
 		"evos": ["Lucario"],
 		"eggGroups": ["Undiscovered"],
-		"canHatch": true,
+		"canHatch": True,
 	},
 	"lucario": {
 		"num": 448,
@@ -8113,7 +8113,7 @@ SpeciesDataTable = {
 		"color": "Blue",
 		"evos": ["Mantine"],
 		"eggGroups": ["Undiscovered"],
-		"canHatch": true,
+		"canHatch": True,
 	},
 	"snover": {
 		"num": 459,
@@ -15375,7 +15375,7 @@ SpeciesDataTable = {
 		"color": "Purple",
 		"evos": ["Toxtricity", "Toxtricity-Low-Key"],
 		"eggGroups": ["Undiscovered"],
-		"canHatch": true,
+		"canHatch": True,
 	},
 	"toxtricity": {
 		"num": 849,
@@ -16133,7 +16133,7 @@ SpeciesDataTable = {
 		"tags": ["Restricted Legendary"],
 		"otherFormes": ["Zacian-Crowned"],
 		"formeOrder": ["Zacian", "Zacian-Crowned"],
-		"cannotDynamax": true,
+		"cannotDynamax": True,
 	},
 	"zaciancrowned": {
 		"num": 888,
@@ -16150,7 +16150,7 @@ SpeciesDataTable = {
 		"eggGroups": ["Undiscovered"],
 		"requiredItem": "Rusted Sword",
 		"battleOnly": "Zacian",
-		"cannotDynamax": true,
+		"cannotDynamax": True,
 	},
 	"zamazenta": {
 		"num": 889,
@@ -16167,7 +16167,7 @@ SpeciesDataTable = {
 		"tags": ["Restricted Legendary"],
 		"otherFormes": ["Zamazenta-Crowned"],
 		"formeOrder": ["Zamazenta", "Zamazenta-Crowned"],
-		"cannotDynamax": true,
+		"cannotDynamax": True,
 	},
 	"zamazentacrowned": {
 		"num": 889,
@@ -16184,7 +16184,7 @@ SpeciesDataTable = {
 		"eggGroups": ["Undiscovered"],
 		"requiredItem": "Rusted Shield",
 		"battleOnly": "Zamazenta",
-		"cannotDynamax": true,
+		"cannotDynamax": True,
 	},
 	"eternatus": {
 		"num": 890,
@@ -16200,7 +16200,7 @@ SpeciesDataTable = {
 		"tags": ["Restricted Legendary"],
 		"otherFormes": ["Eternatus-Eternamax"],
 		"formeOrder": ["Eternatus", "Eternatus-Eternamax"],
-		"cannotDynamax": true,
+		"cannotDynamax": True,
 	},
 	"eternatuseternamax": {
 		"num": 890,
@@ -16215,7 +16215,7 @@ SpeciesDataTable = {
 		"weightkg": 0,
 		"color": "Purple",
 		"eggGroups": ["Undiscovered"],
-		"cannotDynamax": true,
+		"cannotDynamax": True,
 	},
 	"kubfu": {
 		"num": 891,
@@ -19468,7 +19468,7 @@ SpeciesDataTable = {
 		"color": "White",
 		"evos": ["Scattervein"],
 		"eggGroups": ["Undiscovered"],
-		"canHatch": true,
+		"canHatch": True,
 		"gen": 9,
 	},
 	"scattervein": {
@@ -19485,7 +19485,7 @@ SpeciesDataTable = {
 		"evoType": "levelFriendship",
 		"evos": ["Hemogoblin"],
 		"eggGroups": ["Monster", "Fairy"],
-		"canHatch": true,
+		"canHatch": True,
 		"gen": 9,
 	},
 	"hemogoblin": {

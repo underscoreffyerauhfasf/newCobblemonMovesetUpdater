@@ -1,7 +1,9 @@
 import re as regex
 import json
 
-import pokemon_dict as pkdict
+import full_dict as pkdict
+
+import pokedex as dex
 
 listFile = "output.txt"
 
@@ -33,12 +35,11 @@ allvcmoves = False
 
 class Pokemon:
     '''A class dedicated to Pokemon objects, storing all relevant information within itself.'''
-    def __init__(self,name,dex_number,formes,showdownset):
+    def __init__(self,name,dex_number):
         self.name = name
         self.pokedex_number = dex_number
-        self.forms = formes
-
-        self.moveset = self.build_moveset(showdownset)
+        self.forms = []
+        self.moveset = {}
 
 
     def build_moveset(self,showdownset):
@@ -107,6 +108,27 @@ class Pokemon:
 
         # ...and we're done!
         return finalmoveset
+    
+    def mergeFormMoveset(self, basemoveset):
+        if self.moveset == {}:
+            return {}
+        if self.moveset['level'] != []:
+            return self.moveset
+        newmoveset = {}
+        for method in self.moveset.keys():
+            newmoveset = list(set(self.moveset[method] + basemoveset[method])).sort()
+        return newmoveset
+    
+    def __str__(self):
+        outputstr = "NAME: %s\tNUM: %d\nMOVESET: " % (self.name, self.pokedex_number)
+        outputstr += json.dumps(self.moveset,indent=4,sort_keys=True) + "\n"
+        if self.forms != []:
+            outputstr += "\nFORMS:\n"
+            for form in self.forms:
+                outputstr += "--------------------------------\n"
+                outputstr += str(form) + "\n"
+            outputstr += "--------------------------------\n"
+        return outputstr
 
 
 class NewSuperCobblemonMovesetImporter:
@@ -115,16 +137,33 @@ class NewSuperCobblemonMovesetImporter:
 
         self.findPokemonData()
     
+    def get_baseform(self, formname):
+        searchingname = dex.SpeciesDataTable[formname]["baseSpecies"]
+        for i in dex.SpeciesDataTable.keys():
+            if dex.SpeciesDataTable[i]["name"] == searchingname:
+                return i
+
+
     def findPokemonData(self):
-        for i in pkdict.colonThree.keys():
-            if "learnset" in pkdict.colonThree[i].keys():
-                currentlearnset = pkdict.colonThree[i]["learnset"]
-            else:
-                currentlearnset = {}
-
-            thismon = Pokemon(i, 0, [], currentlearnset)
-
+        for i in dex.SpeciesDataTable.keys():
+            if i in pkdict.colonThree.keys():
+                newmon = Pokemon(i, dex.SpeciesDataTable[i]["num"])
+                if "learnset" in pkdict.colonThree[i].keys():
+                    #form has a moveset
+                    newmon.moveset = newmon.build_moveset(pkdict.colonThree[i]["learnset"])
+                if "baseSpecies" in dex.SpeciesDataTable[i].keys():
+                    #altform
+                    baseform = self.get_baseform(i)
+                    newmon.moveset = newmon.mergeFormMoveset(self.national_pokedex[baseform].moveset)
+                    self.national_pokedex[baseform].forms.append(newmon)
+                else: 
+                    #baseform
+                    self.national_pokedex[i] = newmon
+                print(i)
+                #print(f"\n\n\n==={i.upper()}===\n")
+                #print(json.dumps(newmon.moveset,indent=4,sort_keys=True))
+        for i in self.national_pokedex.keys():
             print(f"\n\n\n==={i.upper()}===\n")
-            print(json.dumps(thismon.moveset,indent=4,sort_keys=True))
+            print(self.national_pokedex[i])
 
 importer = NewSuperCobblemonMovesetImporter()
