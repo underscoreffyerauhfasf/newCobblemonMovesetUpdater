@@ -32,6 +32,7 @@ allvcmoves = False
 
 
 class Pokemon:
+    '''A class dedicated to Pokemon objects, storing all relevant information within itself.'''
     def __init__(self,name,dex_number,formes,showdownset):
         self.name = name
         self.pokedex_number = dex_number
@@ -41,6 +42,7 @@ class Pokemon:
 
 
     def build_moveset(self,showdownset):
+        '''Compiles passed data in `showdownset` into a Pythonic dictionary and returns it.'''
         # if the passed dict is empty, then doing anything is useless. immediately return
         if showdownset == {}:
             return {}
