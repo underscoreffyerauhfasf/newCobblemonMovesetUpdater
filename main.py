@@ -35,11 +35,13 @@ allvcmoves = False
 
 class Pokemon:
     '''A class dedicated to Pokemon objects, storing all relevant information within itself.'''
-    def __init__(self,name,dex_number):
+    def __init__(self,name,dex_number,preevo,evos):
         self.name = name
         self.pokedex_number = dex_number
         self.forms = []
         self.moveset = {}
+        self.preevo = preevo
+        self.evos = evos
 
 
     def build_moveset(self,showdownset):
@@ -116,7 +118,14 @@ class Pokemon:
             return self.moveset
         newmoveset = {}
         for method in self.moveset.keys():
-            newmoveset = list(set(self.moveset[method] + basemoveset[method])).sort()
+            newmoveset[method] = list(set(self.moveset[method] + basemoveset[method])).sort()
+        return newmoveset
+    
+    def mergePreevoMoveset(self, preevomoveset):
+        newmoveset = self.moveset
+        for method in ['tm', 'tutor', 'egg']:
+            newmoveset[method] = list(set(self.moveset[method] + preevomoveset[method]))
+            newmoveset[method].sort()
         return newmoveset
     
     def __str__(self):
@@ -143,18 +152,49 @@ class NewSuperCobblemonMovesetImporter:
         for i in dex.SpeciesDataTable.keys():
             if dex.SpeciesDataTable[i]["name"] == searchingname:
                 return i
-
+            
+    def getIdFromProperName(self, name):
+        for i in dex.SpeciesDataTable.keys():
+            if dex.SpeciesDataTable[i]["name"] == name:
+                return i
+    
+    def getPokemonById(self, id):
+        if id in self.national_pokedex.keys():
+            return self.national_pokedex[id]
+        else:
+            base = self.get_baseform(id)
+            for form in self.national_pokedex[base].forms:
+                if form.name == id:
+                    return form
+            
+    def carryMovesForward(self,pokemonid):
+        mon = self.getPokemonById(pokemonid)
+        for evo in mon.evos:
+            currentevo = self.getPokemonById(evo)
+            if currentevo != None:
+                currentevo.moveset = currentevo.mergePreevoMoveset(mon.moveset)
+                self.carryMovesForward(evo)
+            
 
     def findPokemonData(self):
         for i in dex.SpeciesDataTable.keys():
             if i in pkdict.colonThree.keys():
-                newmon = Pokemon(i, dex.SpeciesDataTable[i]["num"])
+                currentmondex = dex.SpeciesDataTable[i]
+                if "prevo" in currentmondex.keys():
+                    preevo = self.getIdFromProperName(currentmondex["prevo"])
+                else:
+                    preevo = ""
+                evos = []
+                if "evos" in currentmondex.keys():
+                    for evo in currentmondex["evos"]:
+                        evos.append(self.getIdFromProperName(evo))
+                newmon = Pokemon(i, currentmondex["num"], preevo, evos)
 
                 if "learnset" in pkdict.colonThree[i].keys():
                     # this form has a moveset
                     newmon.moveset = newmon.build_moveset(pkdict.colonThree[i]["learnset"])
 
-                if "baseSpecies" in dex.SpeciesDataTable[i].keys():
+                if "baseSpecies" in currentmondex.keys():
                     # this pokemon is an altform
                     baseform = self.get_baseform(i)
                     newmon.moveset = newmon.mergeFormMoveset(self.national_pokedex[baseform].moveset)
@@ -163,7 +203,11 @@ class NewSuperCobblemonMovesetImporter:
                     #baseform
                     self.national_pokedex[i] = newmon
 
-                print(i)
+                #print(i)
+                
+        for i in dex.SpeciesDataTable.keys():
+            if i in pkdict.colonThree.keys() and self.getPokemonById(i).preevo == "":
+                self.carryMovesForward(i)
 
         for i in self.national_pokedex.keys():
             print(f"\n\n\n==={i.upper()}===\n")
