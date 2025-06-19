@@ -38,8 +38,10 @@ class Pokemon:
     def __init__(self,name,dex_number,preevo,evos):
         self.name = name
         self.pokedex_number = dex_number
+
         self.forms = []
         self.moveset = {}
+
         self.preevo = preevo
         self.evos = evos
 
@@ -114,29 +116,38 @@ class Pokemon:
     def mergeFormMoveset(self, basemoveset):
         if self.moveset == {}:
             return {}
+
         if self.moveset['level'] != []:
             return self.moveset
+
         newmoveset = {}
+
         for method in self.moveset.keys():
             newmoveset[method] = list(set(self.moveset[method] + basemoveset[method])).sort()
+
         return newmoveset
     
     def mergePreevoMoveset(self, preevomoveset):
         newmoveset = self.moveset
+
         for method in ['tm', 'tutor', 'egg']:
             newmoveset[method] = list(set(self.moveset[method] + preevomoveset[method]))
             newmoveset[method].sort()
+
         return newmoveset
     
     def __str__(self):
         outputstr = "NAME: %s\tNUM: %d\nMOVESET: " % (self.name, self.pokedex_number)
         outputstr += json.dumps(self.moveset,indent=4,sort_keys=True) + "\n"
+
         if self.forms != []:
             outputstr += "\nFORMS:\n"
+
             for form in self.forms:
                 outputstr += "--------------------------------\n"
                 outputstr += str(form) + "\n"
             outputstr += "--------------------------------\n"
+
         return outputstr
 
 
@@ -171,6 +182,7 @@ class NewSuperCobblemonMovesetImporter:
         mon = self.getPokemonById(pokemonid)
         for evo in mon.evos:
             currentevo = self.getPokemonById(evo)
+
             if currentevo != None:
                 currentevo.moveset = currentevo.mergePreevoMoveset(mon.moveset)
                 self.carryMovesForward(evo)
@@ -180,11 +192,14 @@ class NewSuperCobblemonMovesetImporter:
         for i in dex.SpeciesDataTable.keys():
             if i in pkdict.colonThree.keys():
                 currentmondex = dex.SpeciesDataTable[i]
+
                 if "prevo" in currentmondex.keys():
                     preevo = self.getIdFromProperName(currentmondex["prevo"])
                 else:
                     preevo = ""
+
                 evos = []
+
                 if "evos" in currentmondex.keys():
                     for evo in currentmondex["evos"]:
                         evos.append(self.getIdFromProperName(evo))
