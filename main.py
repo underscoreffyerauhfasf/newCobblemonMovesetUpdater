@@ -1,11 +1,13 @@
 import re as regex
+import os
 import json
 
 import full_dict as pkdict
 
 import pokedex as dex
 
-listFile = "output.txt"
+cobblemonDatapackFilepath = "./species"
+exportFilepath = "./species-export"
 
 # move will be added to [key] if it is learned via [value]
 learnsetoptions = {
@@ -156,10 +158,14 @@ class NewSuperCobblemonMovesetImporter:
         self.national_pokedex = {}
 
         self.findPokemonData()
-    
+        self.exportPokemonData(cobblemonDatapackFilepath,exportFilepath,self.national_pokedex)
+
+
+
     def get_baseform(self, formname):
-        '''Takes a real name (eg. `"Slowbro"`) and finds the Pokemon that it belongs to.'''
+        '''Takes a Pokemon form and finds the Pokemon that it belongs to, eg. `"slowbrogalar"` returning `"slowbro"`.'''
         searchingname = dex.SpeciesDataTable[formname]["baseSpecies"]
+
         for i in dex.SpeciesDataTable.keys():
             if dex.SpeciesDataTable[i]["name"] == searchingname:
                 return i
@@ -188,6 +194,7 @@ class NewSuperCobblemonMovesetImporter:
                 self.carryMovesForward(evo)
             
 
+
     def findPokemonData(self):
         for i in dex.SpeciesDataTable.keys():
             if i in pkdict.colonThree.keys():
@@ -203,6 +210,7 @@ class NewSuperCobblemonMovesetImporter:
                 if "evos" in currentmondex.keys():
                     for evo in currentmondex["evos"]:
                         evos.append(self.getIdFromProperName(evo))
+
                 newmon = Pokemon(i, currentmondex["num"], preevo, evos)
 
                 if "learnset" in pkdict.colonThree[i].keys():
@@ -227,5 +235,90 @@ class NewSuperCobblemonMovesetImporter:
         for i in self.national_pokedex.keys():
             print(f"\n\n\n==={i.upper()}===\n")
             print(self.national_pokedex[i])
+    
+    def formatMoveset(self,moveset):
+        final_moveset = []
+        level_moveset = []
+
+        for method in moveset:
+            for move in moveset[method]:
+                if method == 'level':
+                    level_moveset.append(":".join(map(str, move)))
+                else:
+                    final_moveset.append(f"{method}:{move}")
+
+        level_moveset.sort(key=lambda move: len(regex.sub(":.*","",move)))
+        final_moveset.sort()
+
+        final_moveset = level_moveset + final_moveset
+
+        return final_moveset
+    
+
+
+    def exportPokemonData(self,import_directory,export_directory,dex_list):
+        print("Exporting...\n\n")
+
+        # loop through all directories within the passed master directory,
+        for generation in os.listdir(import_directory):
+            print(f"\n\n\n\n\n====={generation}=====\n\n")
+
+            # then loop through the files in each directory,
+            for openedFile in os.listdir(f"{import_directory}/{generation}"):
+                pokemon_name = regex.sub(f"\\..*","",openedFile)
+
+                print(f"\n\n==={pokemon_name.upper()}===")
+
+                # open the given file currently being looped through,
+                with open(f"{import_directory}/{generation}/{openedFile}") as f:
+                    j = json.load(f)
+
+                    # and set the pokemon's moveset to be the updated moveset from the pokedex
+                    j['moves'] = self.formatMoveset(dex_list[pokemon_name].moveset)
+
+                    # if the given pokemon has any forms, then there's still more work to do:
+                    if dex_list[pokemon_name].forms != {}:
+                        formes = dex_list[pokemon_name].forms
+
+                        # loop through the forms the pokemon has;
+                        for form in formes:
+                            # get the suffix of the current form (eg. "slowbrogalar" returns "Galar", through "Slowbro-Galar")
+                            formSuffix = regex.sub(".*-","",dex.SpeciesDataTable[form.name]['name'])
+                            print(f"\t- {formSuffix}")
+
+                            # if the given form doesn't have any moves at all, we dont have to care about it
+                            if all(form.moveset[x] == None for x in form.moveset):
+                                continue
+
+                            # cobblemon doesn't care for totems, so if the given form is a totem, skip it
+                            if formSuffix == "Totem":
+                                continue
+
+                            # otherwise, loop through the open json's forms and attempt to find a match
+                            for jsonForm in j['forms']:
+                                if jsonForm['name'] != formSuffix:
+                                    continue
+                                
+                                # if a match is found, patch in the new moves!
+                                jsonForm['moves'] = self.formatMoveset(form.moveset)
+
+
+
+                    # at this point, operations on the given pokemon are finished. it's time to export:
+
+                    # if the path to the export location does not already exist, make it
+                    if not os.path.exists(f"{export_directory}/{generation}"):
+                        os.makedirs(f"{export_directory}/{generation}")
+                    # if not, check if there is already a file where the export is going to be created. if so, delete it
+                    elif os.path.exists(f"{export_directory}/{generation}/{openedFile}"):
+                        os.remove(f"{export_directory}/{generation}/{openedFile}")
+
+                    # at last, write the file. we're done!
+                    with open(f"{export_directory}/{generation}/{openedFile}", 'x') as exportedFile:
+                        output = json.dumps(j,indent=2)
+
+                        exportedFile.write(output)
+
+
 
 importer = NewSuperCobblemonMovesetImporter()
